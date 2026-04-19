@@ -285,6 +285,14 @@ body[data-state='empty'] #removeBtn {
   justify-content: center;
   padding: 48px 24px 96px;
   position: relative;
+  /* When the TOC is visible, this is overridden in the media query below
+     so the doc centers in the remaining space rather than the full viewport. */
+}
+
+@media (min-width: 1341px) {
+  body[data-state='loaded']:not([data-view='source']) .stage {
+    padding-left: 320px; /* 32 (toc-left) + 200 (toc-width) + 88 (gap) */
+  }
 }
 
 .stage__inner {
@@ -298,10 +306,7 @@ body[data-state='empty'] #removeBtn {
 .toc {
   position: fixed;
   top: 96px;
-  /* Anchor to the right edge of the centered doc so the TOC always sits
-     a fixed gap to its left — never overlapping. Doc is 760px max,
-     half = 380px, plus an 88px gap and the 200px TOC width. */
-  right: calc(50% + 380px + 88px);
+  left: 32px;
   width: 200px;
   max-height: calc(100vh - 140px);
   overflow-y: auto;
