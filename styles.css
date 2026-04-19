@@ -772,6 +772,54 @@ kbd {
   font-size: 0.85em;
 }
 
+/* ---------- Arabic / RTL ---------- */
+.doc[dir='rtl'] {
+  font-family: 'IBM Plex Sans Arabic', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  font-size: 16.5px;
+  line-height: 1.85;
+  letter-spacing: 0;
+  text-align: right;
+}
+
+.doc[dir='rtl'] :is(h1, h2, h3, h4, h5, h6) {
+  font-family: 'IBM Plex Sans Arabic', 'Inter', sans-serif;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+
+.doc[dir='rtl'] h1 {
+  font-size: 2em;
+}
+
+/* Lists: flip the indent side */
+.doc[dir='rtl'] ul,
+.doc[dir='rtl'] ol {
+  padding-left: 0;
+  padding-right: 1.6em;
+}
+
+/* Blockquote: border + soft tint on the right side */
+.doc[dir='rtl'] blockquote {
+  border-left: none;
+  border-right: 3px solid var(--accent);
+  background: linear-gradient(-90deg, rgba(99, 91, 255, 0.04), transparent 70%);
+}
+
+/* Tables read right-to-left too */
+.doc[dir='rtl'] th,
+.doc[dir='rtl'] td {
+  text-align: right;
+}
+
+/* Inline code keeps LTR direction so identifiers render correctly */
+.doc[dir='rtl'] code,
+.doc[dir='rtl'] pre {
+  direction: ltr;
+  text-align: left;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
 /* ---------- Print ---------- */
 @media print {
   body {

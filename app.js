@@ -85,6 +85,9 @@ function render(markdown, filename, { persist = true } = {}) {
   els.doc.innerHTML = html;
   els.source.textContent = currentMarkdown;
 
+  // Auto-detect Arabic content and switch the document to RTL.
+  applyDirection(currentMarkdown);
+
   // External links: open in new tab safely.
   els.doc.querySelectorAll('a[href^="http"]').forEach((a) => {
     a.target = '_blank';
@@ -97,6 +100,21 @@ function render(markdown, filename, { persist = true } = {}) {
   window.scrollTo({ top: 0, behavior: 'instant' });
 
   if (persist) saveDoc();
+}
+
+/* ---------- RTL detection ---------- */
+const RTL_RE = /[\u0590-\u08FF\uFB1D-\uFDFF\uFE70-\uFEFF]/g;
+const LETTER_RE = /[\p{L}]/gu;
+
+function applyDirection(text) {
+  const rtlMatches = text.match(RTL_RE);
+  const letterMatches = text.match(LETTER_RE);
+  const rtlCount = rtlMatches ? rtlMatches.length : 0;
+  const letterCount = letterMatches ? letterMatches.length : 0;
+  // If at least 25% of letters are RTL scripts (Arabic, Hebrew, etc.), flip the doc.
+  const isRtl = letterCount > 0 && rtlCount / letterCount > 0.25;
+  els.doc.dir = isRtl ? 'rtl' : 'ltr';
+  els.doc.lang = isRtl ? 'ar' : '';
 }
 
 /* ---------- Table of contents ---------- */
@@ -276,6 +294,8 @@ function clearDoc() {
   currentMarkdown = '';
   currentFilename = 'Untitled.md';
   els.doc.innerHTML = '';
+  els.doc.removeAttribute('dir');
+  els.doc.removeAttribute('lang');
   els.source.textContent = '';
   els.tocList.innerHTML = '';
   if (tocObserver) tocObserver.disconnect();
