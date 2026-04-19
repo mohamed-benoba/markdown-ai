@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Markdown Preview</title>
+    <link rel="preconnect" href="https://rsms.me/" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-light.min.css"
+      id="hljs-light"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-dark.min.css"
+      id="hljs-dark"
+      disabled
+    />
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.11/dist/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/highlight.min.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-state="empty">
+    <header class="toolbar">
+      <div class="toolbar__left">
+        <div class="brand" aria-label="Markdown Preview">
+          <span class="brand__mark">M</span>
+          <span class="brand__text">Markdown</span>
+        </div>
+        <div class="filename" id="filename" title="No file loaded">Untitled.md</div>
+        <button class="icon-btn icon-btn--danger" id="removeBtn" title="Remove file" aria-label="Remove file">
+          <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+            <path
+              d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m2 0v12a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V7h10ZM10 11v6M14 11v6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div class="toolbar__right">
+        <div class="seg" role="tablist" aria-label="View mode">
+          <button class="seg__btn is-active" data-view="preview" role="tab" aria-selected="true">
+            Preview
+          </button>
+          <button class="seg__btn" data-view="source" role="tab" aria-selected="false">
+            Source
+          </button>
+        </div>
+
+        <button class="btn btn--ghost" id="openBtn" title="Open file (⌘O)">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path
+              d="M4 7a2 2 0 0 1 2-2h3.6l2 2H18a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span>Open</span>
+        </button>
+
+        <button class="btn btn--ghost" id="copyBtn" title="Copy markdown (⌘⇧C)">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <rect x="8" y="8" width="11" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.6" />
+            <path
+              d="M5 16V6a2 2 0 0 1 2-2h9"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span>Copy</span>
+        </button>
+
+        <button class="btn btn--ghost" id="printBtn" title="Print / Save as PDF (⌘P)">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path
+              d="M7 9V4h10v5M7 18H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M7 14h10v6H7z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span>Print</span>
+        </button>
+
+        <button class="icon-btn" id="themeBtn" title="Toggle theme (⌘J)" aria-label="Toggle theme">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path
+              d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="stage" id="stage">
+      <aside class="toc" id="toc" aria-label="Table of contents">
+        <div class="toc__label">On this page</div>
+        <ul class="toc__list" id="tocList"></ul>
+      </aside>
+
+      <div class="stage__inner">
+        <p class="hint" id="hint">
+          Drop another markdown file anywhere to replace this one.
+        </p>
+        <article class="doc" id="doc"></article>
+        <pre class="source" id="source" hidden></pre>
+      </div>
+
+      <section class="empty" id="empty">
+        <div class="empty__card">
+          <div class="empty__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28">
+              <path
+                d="M6 3h8l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+              <path d="M14 3v4h4" fill="none" stroke="currentColor" stroke-width="1.6" />
+              <path
+                d="M8 13h8M8 16h8M8 10h4"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+          <h1>Drop a markdown file</h1>
+          <p>Or click <em>Open</em> to start reading. Files stay on your device — nothing leaves the browser.</p>
+
+          <div class="empty__actions">
+            <button class="btn btn--primary" id="emptyOpen">Open file</button>
+            <button class="btn btn--ghost" id="emptySample">Try a sample</button>
+          </div>
+
+          <div class="empty__hint">
+            <kbd>⌘</kbd><kbd>O</kbd> open · <kbd>⌘</kbd><kbd>V</kbd> paste markdown · <kbd>⌘</kbd><kbd>J</kbd> theme
+          </div>
+        </div>
+      </section>
+
+      <div class="dropzone" id="dropzone" aria-hidden="true">
+        <div class="dropzone__inner">Drop to preview</div>
+      </div>
+    </main>
+
+    <input type="file" id="fileInput" accept=".md,.markdown,.txt,text/markdown" hidden />
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
