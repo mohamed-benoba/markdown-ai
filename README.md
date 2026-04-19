@@ -2,6 +2,10 @@
 
 A minimal, focused markdown reader for the AI age. Drop in a `.md` file, read it cleanly, copy or print. Nothing leaves your browser.
 
+![Empty state](docs/empty-state.png)
+
+![Reading view with table of contents](docs/preview.png)
+
 ## Run it
 
 It's a single static page — no build, no install.
