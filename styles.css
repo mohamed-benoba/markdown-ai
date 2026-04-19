@@ -300,8 +300,8 @@ body[data-state='empty'] #removeBtn {
   top: 96px;
   /* Anchor to the right edge of the centered doc so the TOC always sits
      a fixed gap to its left — never overlapping. Doc is 760px max,
-     half = 380px, plus a 56px gap and the 200px TOC width. */
-  right: calc(50% + 380px + 56px);
+     half = 380px, plus an 88px gap and the 200px TOC width. */
+  right: calc(50% + 380px + 88px);
   width: 200px;
   max-height: calc(100vh - 140px);
   overflow-y: auto;
@@ -797,7 +797,7 @@ kbd {
 }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 1280px) {
+@media (max-width: 1340px) {
   .toc {
     display: none;
   }
