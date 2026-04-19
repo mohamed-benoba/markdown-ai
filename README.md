@@ -2,6 +2,8 @@
 
 A minimal, focused markdown reader for the AI age. Drop in a `.md` file, read it cleanly, copy or print. Nothing leaves your browser.
 
+**Live demo → [beautiful-markdown.netlify.app](https://beautiful-markdown.netlify.app/)**
+
 ![Empty state](docs/empty-state.png)
 
 ![Reading view with table of contents](docs/preview.png)
