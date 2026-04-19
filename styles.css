@@ -283,7 +283,7 @@ body[data-state='empty'] #removeBtn {
   flex: 1;
   display: flex;
   justify-content: center;
-  padding: 48px 24px 96px;
+  padding: 48px 180px 96px;
   position: relative;
   /* When the TOC is visible, this is overridden in the media query below
      so the doc centers in the remaining space rather than the full viewport. */
